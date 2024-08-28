@@ -296,11 +296,11 @@ pub fn create_and_consolidate_chainhook_config_with_predicates(
             }
         }
 
-        if report.last_block_height_update == chain_tip_height {
-            observers_ready.push(spec);
-        } else {
-            observers_to_catchup.push((spec, report));
-        }
+        observers_ready.push(spec);
+        // if report.last_block_height_update == chain_tip_height {
+        // } else {
+        //     observers_to_catchup.push((spec, report));
+        // }
     }
 
     // Clean-up
