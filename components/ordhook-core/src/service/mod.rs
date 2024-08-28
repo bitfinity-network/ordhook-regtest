@@ -124,7 +124,7 @@ impl Service {
             open_readonly_ordhook_db_conn(&self.config.expected_cache_path(), &self.ctx)
                 .expect("unable to retrieve ordhook db");
         let chain_tip_height =
-            find_latest_inscription_block_height(&ordhook_db, &self.ctx)?.unwrap();
+            find_latest_inscription_block_height(&ordhook_db, &self.ctx)?.unwrap_or_default();
         // 1) update event_observer_config with observers ready to be used
         // 2) catch-up outdated observers by dispatching replays
         let (chainhook_config, outdated_observers) =
