@@ -2,6 +2,7 @@ use std::{
     collections::{BTreeMap, HashSet},
     path::PathBuf,
     sync::mpsc::{channel, Sender},
+    u64,
 };
 
 use chainhook_sdk::{
@@ -271,7 +272,7 @@ pub fn create_and_consolidate_chainhook_config_with_predicates(
 
     let previously_registered_observers = find_all_observers(&observers_db_conn, ctx);
     for (spec, report) in previously_registered_observers.into_iter() {
-        let ChainhookSpecification::Bitcoin(spec) = spec else {
+        let ChainhookSpecification::Bitcoin(mut spec) = spec else {
             continue;
         };
         // De-register outdated observers: was end_block (if specified) scanned?
@@ -296,6 +297,10 @@ pub fn create_and_consolidate_chainhook_config_with_predicates(
             }
         }
 
+        // FIXME: I TOUCHED THIS
+        println!("spec: {:?}", spec);
+        spec.enabled = true;
+        spec.expired_at = Some(u64::MAX);
         observers_ready.push(spec);
         // if report.last_block_height_update == chain_tip_height {
         // } else {
