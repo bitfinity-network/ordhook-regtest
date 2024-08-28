@@ -54,7 +54,7 @@ pub fn start_bitcoin_scan_runloop(
                         &mut observers_db_conn,
                         &moved_ctx,
                     );
-                    return;
+                    // return;
                 }
             };
             let _ = observer_command_tx.send(ObserverCommand::EnablePredicate(
